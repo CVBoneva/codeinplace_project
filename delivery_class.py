@@ -20,10 +20,10 @@ class DeliveryItems():
     def SortFunction(self, e):
         return e.street
     
-    def __init__(self):
+    def __init__(self, file_name):
 
         
-        self.matrix = self.load_data()
+        self.matrix = self.load_data(file_name)
 
     def test_to_json(self):
         
@@ -32,10 +32,10 @@ class DeliveryItems():
         f.write(make_json)
         f.close()    
 
-    def load_data(self):
+    def load_data(self, file_name):
 
         try:
-            data_array = self.read_from_file() 
+            data_array = self.read_from_file(file_name) 
             print("data read from file")
         except Exception as e: 
             print(e)
@@ -62,9 +62,10 @@ class DeliveryItems():
 
         return my_array
     
-    def  read_from_file(self):
+    def  read_from_file(self, file_name):
          
-        f_handler = open("items.json")
+        file_name = "items.json" if len(file_name) == 0 else file_name
+        f_handler = open(file_name)
         json_txt = f_handler.read()
         item_objects = json.loads(json_txt)
         f_handler.close() 

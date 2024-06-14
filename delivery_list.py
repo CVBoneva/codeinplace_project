@@ -14,10 +14,13 @@ CANVAS_WIDTH = 600
 CANVAS_HEIGHT = 600
 
 def main():
+
+    file_name = input("Please enter a file name to load data:")
+    print(file_name)
     
     #load data to be displayed  
     #get all destination items, sorted by street name (group
-    delivery_items = DeliveryItems()
+    delivery_items = DeliveryItems(file_name)
     delivery_items.matrix.sort(key = delivery_items.SortFunction)
 
     # Create the main window
