@@ -6,15 +6,8 @@ NUM_WIDGETS_PER_LINE = 4
 WIDTH_PER_SYMBOL_PX = 10
 HEIGHT_PER_ROW_PX = 70
 
-def create_view(parent):
-
-    def SortFunction(e):
-        return e.street
+def create_view(parent, delivery_items):
     
-    #get all destination items, sorted by street number
-    delivery_items = DeliveryItems()
-    delivery_items.matrix.sort(key = SortFunction)
-
     #
     (h_block, w_block, sorted_array, longest_name) = make_calculations_and_possitioning(delivery_items)
     all_gelivery_items = len(delivery_items.matrix)   

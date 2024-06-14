@@ -13,7 +13,12 @@ Can be replaced with different sources as text file, db sql
 """
 
 class DeliveryItems():
+
     matrix = []
+    title = "my final project in Code in Place"
+
+    def SortFunction(self, e):
+        return e.street
     
     def __init__(self):
 
@@ -31,9 +36,12 @@ class DeliveryItems():
 
         try:
             data_array = self.read_from_file() 
+            print("data read from file")
         except Exception as e: 
             print(e)
-            data_array = self.load_from_arrays()   
+            data_array = self.load_from_arrays()  
+            self.title = "My Delivery List" 
+            print("data read from arrays")
 
         return data_array     
 
@@ -76,6 +84,7 @@ class DeliveryItems():
 
     def toObject(self, to_deserialize):
         my_array = []
+        self.title = to_deserialize["title"]
         items = to_deserialize["matrix"]
         for item in items:
             my_name = item["name"]
