@@ -1,5 +1,7 @@
 {   
     "title" : "Booklets Delivery List",
+    "to_do_action" : "To deliver",
+    "finished_action" : "Delivered",
     "matrix": [
         {
             "address": "Jasmine str. 13",

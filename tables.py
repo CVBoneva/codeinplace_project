@@ -7,11 +7,13 @@ WIDTH_PER_SYMBOL_PX = 10
 HEIGHT_PER_ROW_PX = 70
 
 def create_view(parent, delivery_items):
-    
+
     #
     (h_block, w_block, sorted_array, longest_name) = make_calculations_and_possitioning(delivery_items)
     all_gelivery_items = len(delivery_items.matrix)   
 
+    table_title_action = delivery_items.to_do_action
+    button_done_action = delivery_items.finished_action
     #creates each table in grid - starting left-top WE (left to right)(row 0, col 0)(row 0, col 1) ...
     i = 0
     for k in sorted_array.keys():
@@ -21,7 +23,7 @@ def create_view(parent, delivery_items):
 
         frame = create_frame(parent, h_block, w_block, grid_row, grid_col)
 
-        make_table(frame, k, addresses, longest_name, all_gelivery_items)
+        make_table(frame, k, addresses, longest_name, all_gelivery_items, table_title_action, button_done_action)
 
         i+=1
 
@@ -46,7 +48,7 @@ def make_calculations_and_possitioning(items):
 
     max_rows = get_max_rows(sorted_array)
     max_letters = get_max_name_len(items)
-    max_title = get_max_title_len(sorted_array)
+    max_title = get_max_title_len(sorted_array) + 4 # 4 is for left and right space. W is wider letter
 
     w = get_max_width(max_title, max_letters, 3)
 
@@ -55,10 +57,11 @@ def make_calculations_and_possitioning(items):
 
     return  height_per_block, width_per_block, sorted_array, max_letters
 
-STR_TITLE_FORMAT = "{}  ({} to deliver)"
+
 def find_unique_addresses(items):
     one_block = dict() # key = street name; value = array of items
     num_blocks = 0
+    STR_TITLE_FORMAT = "{}  ({} " + items.to_do_action + ")"
     for item in items.matrix:
         if item.street not in one_block:
             title_per_street = STR_TITLE_FORMAT.format(item.street, 1)

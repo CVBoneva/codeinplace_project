@@ -34,6 +34,7 @@ def main():
     #generate ui 
     create_view(canvas, delivery_items)
 
+
     #wait the user to close the window
     canvas.mainloop()
 

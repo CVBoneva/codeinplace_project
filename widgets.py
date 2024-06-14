@@ -38,22 +38,25 @@ def create_tooltip(parent, text):
 
 FONT_SIZE_TITLE = 16
 FONT_SIZE_ROW = 14
-#WIDTH_COL_NAME_LIT = 20
+
 WIDTH_COL_BUTTON_LIT = 2
 HEIGHT_ROW_LIT = 1
-STR_TITLE_STATUS = " {} to deliver"
+
 STR_TITLE_FORMAT = "{}  ({})"
-STR_DONE = "Delivered"
+
 STR_ALL_DONE = "All good!"
 #creates single table containing the group of items - rows with names and a button
-def make_table(parent, street, addresses, name_width, all_gelivery_items):
+def make_table(parent, street, addresses, name_width, all_gelivery_items, table_title, done_action):
+
     
+
     global number_not_delivered 
     number_not_delivered = all_gelivery_items
     #how manu address per current street
     rows = len(addresses)
 
-    title = create_title(street, rows, parent)
+    STR_TITLE_STATUS = "{} " + table_title
+    title = create_title(street, rows, parent, STR_TITLE_STATUS)
 
     #make table grid
     for r in range(rows):
@@ -62,7 +65,7 @@ def make_table(parent, street, addresses, name_width, all_gelivery_items):
         address = addresses[r]["address"]
         label = create_first_column(parent, name, address, r, name_width)
    
-        button = create_second_column(parent, label, r, title, street)
+        button = create_second_column(parent, label, r, title, street, done_action, STR_TITLE_STATUS)
    
         parent.columnconfigure(0, weight=name_width)
         parent.columnconfigure(1, weight=WIDTH_COL_BUTTON_LIT)
@@ -78,7 +81,7 @@ def create_button(parent, text, fg, label, width, height):
                          relief=tk.RAISED, height=height, width=width)    
     return button
 
-def create_title(street, rows, parent):
+def create_title(street, rows, parent, STR_TITLE_STATUS):
     #title of the table
     
     title_text = STR_TITLE_FORMAT.format(street, STR_TITLE_STATUS.format(rows))
@@ -101,16 +104,16 @@ def create_first_column(parent, name, address, r, name_width):
 
     return label
 
-def create_second_column(parent, label, r, title, street_name):
+def create_second_column(parent, label, r, title, street_name, done_action, STR_TITLE_STATUS):
 
     def mark_done(event, label, parent):
         label["fg"] = "dark gray"
         event.widget.destroy() 
 
-        label_done = create_widget(parent, tk.Label, text=STR_DONE, font=("Arial", FONT_SIZE_ROW), bg='lightblue', bd=3)
+        label_done = create_widget(parent, tk.Label, text=done_action, font=("Arial", FONT_SIZE_ROW), bg='lightblue', bd=3)
         label_done.grid(row=r+1, column=1, padx = 5, pady = 5)
 
-        change_title(parent, title, street_name)
+        change_title(parent, title, street_name, STR_TITLE_STATUS)
 
     
     button = create_button(parent, text="OK", fg="green", label=label, width=WIDTH_COL_BUTTON_LIT, height=HEIGHT_ROW_LIT)
@@ -120,7 +123,7 @@ def create_second_column(parent, label, r, title, street_name):
     return button
 
 
-def change_title(frame, title, street_name):
+def change_title(frame, title, street_name, STR_TITLE_STATUS):
 
     children = frame.winfo_children()
     def button_lambda(a):  

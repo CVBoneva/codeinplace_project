@@ -16,6 +16,8 @@ class DeliveryItems():
 
     matrix = []
     title = "my final project in Code in Place"
+    to_do_action = "To do"
+    finished_action = "Done"
 
     def SortFunction(self, e):
         return e.street
@@ -41,6 +43,8 @@ class DeliveryItems():
             print(e)
             data_array = self.load_from_arrays()  
             self.title = "My Delivery List" 
+            self.to_do_action = "To deliver" 
+            self.finished_action = "Delivered"
             print("data read from arrays")
 
         return data_array     
@@ -86,6 +90,8 @@ class DeliveryItems():
     def toObject(self, to_deserialize):
         my_array = []
         self.title = to_deserialize["title"]
+        self.to_do_action = to_deserialize["to_do_action"]
+        self.finished_action = to_deserialize["finished_action"]
         items = to_deserialize["matrix"]
         for item in items:
             my_name = item["name"]
